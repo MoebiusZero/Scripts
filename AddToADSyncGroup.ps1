@@ -1,5 +1,8 @@
 ﻿###Adds users to the AD Sync Group so they will be replicated###
 
+#Get the list of users that needs to be added to the group
+$ous = 'LDAP Path 1','LDAP Path 2','LDAP Path 3'
+$allusers = $ous | ForEach-Object {Get-ADUser -Filter 'enabled -eq $true' -SearchBase $_ -Properties SamAccountName} | Select SamAccountName
 
 #Add the user to the group
 Foreach ($user in $allusers) {
