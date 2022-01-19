@@ -18,7 +18,7 @@ def pushmessageroomba(title,message):
         "v" : '',
         "i" : '',
         "d" : 'a',
-        "k" : 'API KEY HERE',
+        "k" : 'fafeKkl8RySWvc2P8Qjm',
         }
 
  request = urllib2.Request(url, urllib.urlencode(post_fields).encode())
@@ -32,7 +32,7 @@ def domoticzroombavar(idx):
  return variable
 
 #Roomba devices
-devices = ["http://192.168.1.1:3001/api/local/info/state","http://192.168.1.1:3000/api/local/info/state","http://192.168.1.1:3002/api/local/info/state"]
+devices = ["http://10.10.0.19:3001/api/local/info/state","http://10.10.0.19:3000/api/local/info/state","http://10.10.0.19:3002/api/local/info/state"]
 
 for device in devices:
     #Get status from each Roomba and put the values in Domoticz
@@ -47,15 +47,15 @@ for device in devices:
         calldomoticz(domoticzurl)
 
         if status == "charge" and status != variable:
-           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&&parm=switchlight&idx=803&switchcmd=Set%20Level&level=0"		
+           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&param=switchlight&idx=803&switchcmd=Set%20Level&level=0"		
            calldomoticz(domoticzurl)
            pushmessageroomba(name,"Roomba is now charging")
         elif status == "run" and status != variable:
-           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&&parm=switchlight&idx=803&switchcmd=Set%20Level&level=10"
+           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&param=switchlight&idx=803&switchcmd=Set%20Level&level=10"
            calldomoticz(domoticzurl)
            pushmessageroomba(name,"Roomba is now cleaning")
         elif status == "stop" and status != variable: 
-           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&&parm=switchlight&idx=803&switchcmd=Set%20Level&level=30"
+           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&param=switchlight&idx=803&switchcmd=Set%20Level&level=30"
            calldomoticz(domoticzurl)
            pushmessageroomba(name,"Roomba has stopped for a unknown reason, please check up on the Roomba Downstairs")
 
@@ -65,15 +65,15 @@ for device in devices:
         calldomoticz(domoticzurl)
         
         if status == "charge" and status != variable:
-           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&&parm=switchlight&idx=802&switchcmd=Set%20Level&level=0"
+           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&param=switchlight&idx=802&switchcmd=Set%20Level&level=0"
            calldomoticz(domoticzurl)
            pushmessageroomba(name,"Roomba is now charging")
         elif status == "run" and status != variable:
-           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&&parm=switchlight&idx=802)&switchcmd=Set%20Level&level=10"
+           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&param=switchlight&idx=802&switchcmd=Set%20Level&level=10"
            calldomoticz(domoticzurl)
            pushmessageroomba(name,"Roomba is now cleaning")
         elif status == "stop" and status != variable:
-           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&&parm=switchlight&idx=802&switchcmd=Set%20Level&level=30"
+           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&param=switchlight&idx=802&switchcmd=Set%20Level&level=30"
            calldomoticz(domoticzurl)
            pushmessageroomba(name,"Roomba has stopped for a unknown reason, please check up on the Roomba Upstairs")
 
@@ -83,14 +83,15 @@ for device in devices:
         calldomoticz(domoticzurl)
 	   
         if status == "charge" and status != variable:
-           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&&parm=switchlight&idx=804&switchcmd=Set%20Level&level=0"
+           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&param=switchlight&idx=804&switchcmd=Set%20Level&level=0"
            calldomoticz(domoticzurl)
            pushmessageroomba(name,"Roomba is now charging")
         elif status == "run" and status != variable:
-           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&&parm=switchlight&idx=804)&switchcmd=Set%20Level&level=10"
+           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&param=switchlight&idx=804&switchcmd=Set%20Level&level=10"
            calldomoticz(domoticzurl)
            pushmessageroomba(name,"Roomba is now cleaning")
         elif status == "stop" and status != variable:
-           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&&parm=switchlight&idx=804&switchcmd=Set%20Level&level=30"
+           domoticzurl = "http://127.0.0.1:8080/json.htm?type=command&param=switchlight&idx=804&switchcmd=Set%20Level&level=30"
            calldomoticz(domoticzurl)
            pushmessageroomba(name,"Roomba has stopped for a unknown reason, please check up on the Roomba Mop Downstairs")
+
