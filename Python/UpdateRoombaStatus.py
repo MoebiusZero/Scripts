@@ -18,7 +18,7 @@ def pushmessageroomba(title,message):
         "v" : '',
         "i" : '',
         "d" : 'a',
-        "k" : 'fafeKkl8RySWvc2P8Qjm',
+        "k" : 'API KEY HERE',
         }
 
  request = urllib2.Request(url, urllib.urlencode(post_fields).encode())
@@ -32,7 +32,7 @@ def domoticzroombavar(idx):
  return variable
 
 #Roomba devices
-devices = ["http://10.10.0.19:3001/api/local/info/state","http://10.10.0.19:3000/api/local/info/state","http://10.10.0.19:3002/api/local/info/state"]
+devices = ["http://192.168.0.1:3001/api/local/info/state","http://192.168.0.1:3000/api/local/info/state","http://192.168.0.1:3002/api/local/info/state"]
 
 for device in devices:
     #Get status from each Roomba and put the values in Domoticz
