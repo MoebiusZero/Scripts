@@ -9,8 +9,8 @@ import shutil
 
 from datetime import datetime
 
-username='ringaccount'
-password='passwordring'
+username='ringusername'
+password='ringpassword!'
 cache_file = Path('token.cache')
 
 def token_updated(token):
@@ -19,7 +19,7 @@ def token_updated(token):
     f.close()
 
 def otp_callback():
-    auth_code = '2facodehere'
+    auth_code = '763502'
     return auth_code
 
 
@@ -40,45 +40,46 @@ devices = myring.devices()
 doorbells = devices['doorbots']
 doorbell = doorbells[0]
 
-def domoticzrequest (url):
-  request = urllib2.Request(url)
-  response = urllib2.urlopen(request)
-  return response.read()
-
 # Now loop infinitely
 while(1):
-   for event in doorbell.history(limit=1, kind='motion'):
-          currentevent = ('%s' % event['created_at'])
-          currenteventfile = open("currentmotionevent",  "w+")
-          currenteventfile.write(currentevent)
-          currenteventfile.close()
+	#Stop processing if there are no doorbell dings to process
+	if not doorbell.history(limit=1,kind='motion'):
+		print('EMPTY')
 
-   readcurrent = open("currentmotionevent", "r")
-   readlast = open("lastmotionevent", "r")
+	else:
+		for event in doorbell.history(limit=1, kind='motion'):
+			now = datetime.now()
+			today = now.strftime("%d-%m-%y")
+			timestamp = now.strftime("%d-%m-%Y %H:%M:%S")
+			storagepath = '/mnt/RingSecurity/Motion/'
+			videolocation = storagepath + today + '/'
+			videofile = videolocation + 'lastmotion_' + timestamp + '.mp4'
+			checkfolder = os.path.exists(storagepath + today)
 
-   currentmotion = readcurrent.readlines()
-   lastmotion = readlast.readlines()
+		if not checkfolder:
+			os.makedirs(storagepath + today)
 
-   for i in currentmotion:
-      for j in lastmotion:
-           if i != j:
-              now = datetime.now()
-              today = now.strftime("%d-%m-%y")
-              timestamp = now.strftime("%d-%m-%Y %H:%M:%S")
-              storagepath = '/mnt/RingSecurity/Motion/'
-              videolocation = storagepath + today + '/'
-              videofile = videolocation + 'lastmotion_' + timestamp + '.mp4'
-              checkfolder = os.path.exists(storagepath + today)
+		#File containg the video ID
+		fileid = "/home/username/ringmotion_ID"
 
-              if not checkfolder:
-                 os.makedirs(storagepath + today)
+		for doorbell in devices['doorbots']:
+			for event in doorbell.history(limit=1, kind='motion'):
+				rawid = event['id']
+				id = (str(rawid))
 
-              sleep(60)
-              doorbell.recording_download(
-              doorbell.history(limit=100, kind='motion')[0]['id'],
-                        filename=videofile,
-                        override=False)
+		#Get the stored video file ID
+		file = open(fileid, "r")
+		storedid = (file.readline())
+		#Compare the stored video file ID with the one from the API
+		if id != storedid:
+			file = open(fileid, "w")
+			file.write(str(id))
+			file.close()
 
-              shutil.copyfile('currentmotionevent','lastmotionevent') 
-   else:
-     sleep(5)
+			sleep(60)
+			doorbell.recording_download(
+			doorbell.history(limit=100, kind='motion')[0]['id'],
+				filename=videofile,
+				override=False)
+else:
+	sleep(5)
