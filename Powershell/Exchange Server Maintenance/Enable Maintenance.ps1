@@ -4,6 +4,10 @@
 #Add the Exchange server powershell Module
 Add-PSSnapin Microsoft.Exchange.Management.Powershell.Snapin
 
+#Get the name of the domain 
+$Getcontroller = Get-ADDomainController
+$domain = $Getcontroller.Domain
+
 #Ask for the server which is being serviced
 $servicedserver = Read-Host -Prompt 'Input the servername being serviced'
 
@@ -18,7 +22,7 @@ Set-ServerComponentState $servicedserver -Component HubTransport -State Draining
 
 #Redirect all incoming mails to secondary server
 Write-Host 'Redirecting mails...'
-Redirect-Message -Server "$servicedserver.quantum.burst.local" -Target "$takeoverserver.(Domain name)"
+Redirect-Message -Server "$servicedserver.$domain" -Target "$takeoverserver.$domain"
 
 #Suspend the server from the DAG
 ""
