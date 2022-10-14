@@ -20,7 +20,7 @@ $lastdays = (get-date).adddays(-30)
 $file = "C:\Scripts\tempinactief.csv"
 
 #Get list of AD user
-Get-ADUser -properties * -filter {(lastlogondate -notlike "*" -OR lastlogondate -le $lastdays) -AND (name -notlike "Exclaimer") -AND (name -notlike "A-Marco Abbink") -AND (passwordlastset -le $lastdays) -AND (enabled -eq $True) -and (PasswordNeverExpires -eq $false) -and (whencreated -le $lastdays)}| select-object name, SAMaccountname, passwordExpired, @{n='LastLogon';e={[DateTime]::FromFileTime($_.LastLogon)}} | Export-Csv $file
+Get-ADUser -properties * -filter {(lastlogondate -notlike "*" -OR lastlogondate -le $lastdays) -AND (name -notlike "Exclaimer") -AND (passwordlastset -le $lastdays) -AND (enabled -eq $True) -and (PasswordNeverExpires -eq $false) -and (whencreated -le $lastdays)}| select-object name, SAMaccountname, passwordExpired, @{n='LastLogon';e={[DateTime]::FromFileTime($_.LastLogon)}} | Export-Csv $file
 
 #Create new file
 Add-Content -Path "C:\Scripts\inactief.csv" -Value '"Gebruiker","Gebruikersnaam","Laatst Ingelogd"'
@@ -70,15 +70,12 @@ Get-ChildItem $newfile | ForEach {
     If ($check) {
                     $csv = Import-Csv $newfile | Select "Gebruiker","Gebruikersnaam","Laatst Ingelogd" | ConvertTo-Html -head $a -Body "<H2>Inactive users</H2>Users below have not logged in for more than 30 days and have been disabled.<br>De Wachtwoorden zijn gereset en accounts uitgeschakeld.<br>"
                     $emailbody = "$csv"
-                    Send-MailMessage -to $to -subject  "Inactieve Gebruikers $monthname $year" -from $from -body $emailbody  -smtpserver internalsmtp.payrollselect.nl -BodyAsHTML
+                    Send-MailMessage -to $to -subject  "Inactieve Gebruikers $monthname $year" -from $from -body $emailbody  -smtpserver (SMTPSERVER) -BodyAsHTML
 
               }
     Else { 
         $text = ConvertTo-Html -Body "<H2>Inactive users</H2>No inactive users this month"
         $emailbody = "$text"
-        Send-MailMessage -to $to -subject -cc $cc "Inactieve Gebruikers $monthname $year" -from $from -body $emailbody  -smtpserver internalsmtp.payrollselect.nl -BodyAsHTML
+        Send-MailMessage -to $to -subject -cc $cc "Inactieve Gebruikers $monthname $year" -from $from -body $emailbody  -smtpserver (SMTPSERVER) -BodyAsHTML
         }
-
-}
-
- 
+} 
