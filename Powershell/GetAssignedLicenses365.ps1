@@ -1,8 +1,6 @@
 #Check if the necessary tools have been installed
 $checkinstall = Get-Module -ListAvailable -name MSOnline
 
- 
-
     if ($checkinstall -ne $null) {
         Write-Host "Module found, proceeding..."
     }
@@ -14,12 +12,12 @@ $checkinstall = Get-Module -ListAvailable -name MSOnline
 #Import the module
 Import-Module MSonline
 
- 
+#Connect to 365
+Connect-MsolService
 
 #Get all the users and export to an Excel file
 $users = Get-MsolUser -All | Where-Object { $_.isLicensed -eq ”TRUE”}
 $users | Foreach-Object{
-  $licenseDetail = ''
   $licenses=''
 
   if($_.licenses -ne $null) {
@@ -31,15 +29,13 @@ $users | Foreach-Object{
   }             
 
   if($licenses){  $licenses = ($licenses + ',' + $licName) } else { $licenses = $licName}
-}}
-
- 
+}} 
 
 New-Object -TypeName PSObject -Property @{   
     UserName=$_.DisplayName 
     IsLicensed=$_.IsLicensed
     Licenses=$licenses
-    LicenseDetails=$licenseDetail }
-}  | Select UserName,IsLicensed,Licenses,LicenseDetails |
+  }
+}  | Select UserName,IsLicensed,Licenses |
 
-Export-CSV "C:\Licenses.csv" -NoTypeInformation -Encoding UTF8 
+Export-CSV ".\Licenses.csv" -NoTypeInformation -Encoding UTF8 
