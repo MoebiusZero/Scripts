@@ -30,7 +30,7 @@ There are only a few changes you need to make. The locations for the JSON file a
 
 If you want e-mail you can configure the $mailmessage values as well. If not you can completely remove the Send E-mail report block. 
 
-I'm fully aware Send-Mailmessage is deprecated, but I personally use this internally only with no access to the internet so I'm pretty much ok with using it. 
+I'm fully aware Send-Mailmessage is deprecated, but I personally use this internally with so I'm pretty much ok with using it. 
 
 ## Automation
 You basically create a task scheduler for this in Windows. Because Powershell 7 is required, you will need to the scheduler to look for the Powershell 7 executable, using simply powershell defaults it to version 5. 
