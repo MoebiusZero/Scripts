@@ -33,8 +33,8 @@ If you want e-mail you can configure the $mailmessage values as well. If not you
 I'm fully aware Send-Mailmessage is deprecated, but I personally use this internally with so I'm pretty much ok with using it. 
 
 ## Automation
-You basically create a task scheduler for this in Windows. Because Powershell 7 is required, you will need to the scheduler to look for the Powershell 7 executable, using simply powershell defaults it to version 5. 
-Simply enter this: "C:\Program Files\PowerShell\7\pwsh.exe" as the program path, assuming you used the default installation settings.
+You basically create a task scheduler for this in Windows. Because Powershell 7 is required, you will need to tell the scheduler to look for the Powershell 7 executable, using simply powershell defaults it to version 5. 
+Enter this **"C:\Program Files\PowerShell\7\pwsh.exe"** as the program path, assuming you used the default installation settings.
 The parameters you use are identical -file "C:\scripts\myscript.ps1" for example
 
 You can run this every minute, hour, days. But keep in mind the API limitations of Nordigen or Spectre. Last thing you want is hitting it. Personally I run it every 6 hours. I don't need my bookkeeping updated in real time.
