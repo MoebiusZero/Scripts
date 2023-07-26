@@ -23,7 +23,7 @@ You need to add a few values in the .env file to make it work
 - **CAN_POST_AUTOIMPORT:** This needs to be set to True, otherwise you will get an error during POST that autoimport through POST is disabled
 - **CAN_POST_FILES:** Needs to be set to True as well, for the same reason as above
 
-To make the container, create a new folder in your docker server, copy the .env and docker-compose.yml files into it and navigate into it. Then run sudo docker-compose up -d to create it. 
+To make the container, create a new folder in your docker server, copy the .env and docker-compose.yml files into it and navigate to the folder. Then run **sudo docker-compose up -d** to create it. 
 
 ## Configure the Script
 There are only a few changes you need to make. The locations for the JSON file and the temporary file with the output from the POST request. 
