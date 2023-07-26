@@ -1,0 +1,12 @@
+ersion: '3.3'
+
+services:
+  importer:
+    image: fireflyiii/data-importer:latest
+    hostname: importer
+    restart: always
+    container_name: firefly_iii_importer
+    ports:
+      - 8090:8080
+    env_file: .env
+
