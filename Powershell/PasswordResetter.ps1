@@ -7,10 +7,10 @@ if ($checkmodule -ne $null) {
 } 
 
 #Get all accounts
-$accounts = Get-ADUser -filter "samaccountname -like 'Synergy.*'"
+$accounts = Get-ADUser -filter "samaccountname -like '<accountname>.*'"
 
 #Change these parameters to alter the sender/recipients/contents of the E-mail
-$from = 'Synergy Password Resetter <ict.support@nijhuisindustries.com>'
+$from = 'Password Resetter <itsme@hello.com>'
 
 #Loop through each account and change the password
 foreach ($account in $accounts) { 
@@ -22,7 +22,7 @@ foreach ($account in $accounts) {
     #Set the password
     Set-ADAccountPassword -Identity $account.SamAccountName -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $password -Force)   
 
-    #Set the To, CC and BCC for each synergy account
+    #Set the To, CC and BCC for each  account
     switch ($account.name) {
         "Account 1" { 
 			#"<e-mail>" for single addresses, @("<email 1>", "<email 2>") for multiple
