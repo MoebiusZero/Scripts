@@ -13,6 +13,18 @@
 #                                                                                                              #                     
 #------------------------------------------------------------------------------------------------------------- #
 
+# Start the script with the correct values filled in for Companyname, ID and language, find the correct values using the links below and start the script.
+# The language we want as new default. Language tag can be found here: https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/available-language-packs-for-windows
+# Geographical ID we want to set. GeoID can be found here: https://learn.microsoft.com/en-us/windows/win32/intl/table-of-geographical-locations?redirectedfrom=MSDN
+# Start the script from anything you want with Install-Language -Companyname <name> -GeoId <ID> -language <language> in the format presented in the links above
+param( 
+      [Parameter(Mandatory)][string]$CompanyName,
+      [Parameter(Mandatory)][int]$GeoId,
+      [Parameter(Mandatory)][string]$language
+
+)
+
+
 # Microsoft Intune Management Extension might start a 32-bit PowerShell instance. If so, restart as 64-bit PowerShell
 If ($ENV:PROCESSOR_ARCHITEW6432 -eq "AMD64") {
     Try {
@@ -23,14 +35,6 @@ If ($ENV:PROCESSOR_ARCHITEW6432 -eq "AMD64") {
     }
     Exit
 }
-
-#Set variables:
-#Company name
-$CompanyName = "Company name"
-# The language we want as new default. Language tag can be found here: https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/available-language-packs-for-windows
-$language = "de-DE"
-# Geographical ID we want to set. GeoID can be found here: https://learn.microsoft.com/en-us/windows/win32/intl/table-of-geographical-locations?redirectedfrom=MSDN
-$geoId = "1031"  # German (Germany)
 
 # Start Transcript
 Start-Transcript -Path "$env:ProgramData\Microsoft\IntuneManagementExtension\Logs\$($(Split-Path $PSCommandPath -Leaf).ToLower().Replace(".ps1",".log"))" | Out-Null
