@@ -4,7 +4,7 @@ Add-LocalGroupMember -Group 'Network Configuration Operators' -Member $loggedonu
 '@ 
 
 # create custom folder and write PS script 
-$path = $(Join-Path $env:ProgramData BBA\Scripts) 
+$path = $(Join-Path $env:ProgramData \Scripts) 
 if (!(Test-Path $path)) 
 { 
 New-Item -Path $path -ItemType Directory -Force -Confirm:$false 
